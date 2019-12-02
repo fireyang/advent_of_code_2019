@@ -1,10 +1,10 @@
-mod day1{
+mod day1 {
     #[allow(dead_code)]
     pub fn part1(vec: Vec<String>) -> i32 {
         let v: Vec<i32> = vec
             .iter()
             .map(|value| value.parse::<i32>().unwrap())
-            .map(|value| value /3 -2)
+            .map(|value| value / 3 - 2)
             .collect();
         // println!("out:{:?}", v);
         let result = v.iter().sum();
@@ -28,15 +28,15 @@ mod day1{
         return result;
     }
 
-    pub fn cal(mut val: i32) -> i32{
+    pub fn cal(mut val: i32) -> i32 {
         let mut v = 0;
-            val = val /3 - 2;
-        while val > 0{
+        val = val / 3 - 2;
+        while val > 0 {
             println!("v:{:?}", val);
             v += val;
-            val = val /3 - 2;
+            val = val / 3 - 2;
         }
-        return v
+        return v;
     }
 }
 
@@ -55,7 +55,6 @@ mod tests {
 
     #[test]
     fn day1_part2() {
-
         let k = day1::cal(1969);
         assert_eq!(k, 966);
         let k2 = day1::cal(100756);
@@ -67,5 +66,4 @@ mod tests {
         // println!("out:{:?}", fuels);
         assert_eq!(fuels, 4870838);
     }
-
 }
