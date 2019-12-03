@@ -27,3 +27,13 @@ pub fn read_from_file(path: &str) -> Result<String, &'static str> {
     contents = contents.trim().to_string();
     Ok(contents)
 }
+
+pub fn parse_from_str(val: &str) -> Vec<String> {
+    let str_vec: Vec<String> = val
+        .split('\n')
+        .map(|x| x.trim())
+        .filter(|&x| x.len() != 0)
+        .map(|x| x.to_string())
+        .collect();
+    str_vec
+}
