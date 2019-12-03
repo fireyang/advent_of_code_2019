@@ -11,8 +11,8 @@ mod day3 {
             .collect();
 
         let mut m = HashMap::new();
-        let mut retV = Vec::new();
-        let mut idx =0;
+        let mut ret_v = Vec::new();
+        let mut idx = 0;
         for i in &v {
             let mut p = (0, 0);
             for n in i {
@@ -24,34 +24,32 @@ mod day3 {
                     Dirt::Down(inner) => (0, -1, *inner),
                     Dirt::None => (0, 0, 0),
                 };
-                for j in 0..len {
+                for _j in 0..len {
                     p = (p.0 + x, p.1 + y);
-                    if idx == 0{
-                            // println!("a:{:?}", &p);
+                    if idx == 0 {
+                        // println!("a:{:?}", &p);
                         m.insert(p, 1);
-                    }else{
-                            // println!("b:{:?}", &p);
+                    } else {
+                        // println!("b:{:?}", &p);
                         if let Some(_) = m.get(&p) {
-                            retV.push(p);
+                            ret_v.push(p);
                         }
                     }
-
                 }
             }
-            idx +=1;
+            idx += 1;
         }
-        let mut minSize =0;
-        for (x, y) in retV{
+        let mut min_size = 0;
+        for (x, y) in ret_v {
             let v = (x as i32).abs() + (y as i32).abs();
-            if(minSize ==0 || v < minSize){
-                minSize = v
+            if min_size == 0 || v < min_size {
+                min_size = v
             }
             // println!("{:?},{:?}", x, y);
-
         }
-            // println!("{:?},{:?}", idx,retV);
+        // println!("{:?},{:?}", idx,ret_v);
 
-        minSize
+        min_size
     }
 
     fn parse_vec(s: String) -> Vec<Dirt> {
@@ -82,21 +80,49 @@ mod day3 {
         Down(i32),
     }
 
-    // impl Display for Dirt {
-    //     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> Result<(), ::std::fmt::Error> {
-    //         match *self {
-    //             Dirt::None => f.write_str("None"),
-    //             Dirt::Left(ref inner) => ::std::fmt::Display::fmt(inner, f),
-    //             Dirt::Right(ref inner) => ::std::fmt::Display::fmt(inner, f),
-    //             Dirt::Up(ref inner) => ::std::fmt::Display::fmt(inner, f),
-    //             Dirt::Down(ref inner) => ::std::fmt::Display::fmt(inner, f),
-    //         }
-    //     }
-    // }
-
     #[allow(dead_code)]
-    pub fn part2(vec: Vec<String>, sum: i32) -> i32 {
-        0
+    pub fn part2(vec: Vec<String>) -> i32 {
+        let v: Vec<Vec<Dirt>> = vec
+            .iter()
+            .map(|value| parse_vec(value.to_string()))
+            // .map(|value| value /3 -2)
+            .collect();
+
+        let mut m = HashMap::new();
+        let mut idx = 0;
+        let mut min_size = 0;
+        for i in &v {
+            let mut p = (0, 0);
+            let mut step = 0;
+            for n in i {
+                // println!("n out:{:?}", n);
+                let (x, y, len) = match n {
+                    Dirt::Left(inner) => (-1, 0, *inner),
+                    Dirt::Right(inner) => (1, 0, *inner),
+                    Dirt::Up(inner) => (0, 1, *inner),
+                    Dirt::Down(inner) => (0, -1, *inner),
+                    Dirt::None => (0, 0, 0),
+                };
+                for _j in 0..len {
+                    p = (p.0 + x, p.1 + y);
+                    step += 1;
+                    if idx == 0 {
+                        // println!("a:{:?}", &p);
+                        m.insert(p, step);
+                    } else {
+                        // println!("b:{:?}", &p);
+                        if let Some(k) = m.get(&p) {
+                            if min_size == 0 || k + step < min_size {
+                                min_size = k + step
+                            }
+                        }
+                    }
+                }
+            }
+            idx += 1;
+        }
+
+        min_size
     }
 }
 
@@ -120,21 +146,10 @@ mod tests {
         assert_eq!(ret2, 709);
     }
 
-    // #[test]
+    #[test]
     fn day3_part2() {
-        let list = common::parse_from_file("./data/day3_part1.txt").unwrap();
-        let mut input2: Vec<String> = list[0].split(',').map(|s| s.to_string()).collect();
-        let ret = day3::part2(input2, 19690720);
-        assert_eq!(ret, 1);
-        // let k = day3::cal(1969);
-        // assert_eq!(k, 966);
-        // let k2 = day3::cal(100756);
-        // println!("out:{:?}", k2);
-        // assert_eq!(k2, 50346);
-        //
-        // let list = common::parse_from_file("./data/day3_part2.txt");
-        // let fuels = day3::part2(list.unwrap());
-        // // println!("out:{:?}", fuels);
-        // assert_eq!(fuels, 4870838);
+        let list = common::parse_from_file("./data/day3_part2.txt").unwrap();
+        let ret2 = day3::part2(list);
+        assert_eq!(ret2, 13836);
     }
 }

@@ -123,7 +123,7 @@ mod tests {
     #[test]
     fn day2_part2() {
         let list = common::parse_from_file("./data/day2_part1.txt").unwrap();
-        let mut input2: Vec<String> = list[0].split(',').map(|s| s.to_string()).collect();
+        let input2: Vec<String> = list[0].split(',').map(|s| s.to_string()).collect();
         let ret = day2::part2(input2, 19690720);
         assert_eq!(ret, 1);
         // let k = day2::cal(1969);
