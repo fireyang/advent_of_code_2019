@@ -70,7 +70,7 @@ mod day5 {
                     let first = get_param(idx + 1, &v, &mode_list[0]);
                     let second = get_param(idx + 2, &v, &mode_list[1]);
                     // println!("set:{:?}", (idx, pcode, first, second));
-                    if  first == 0 {
+                    if first == 0 {
                         second as usize
                     } else {
                         idx + 3
@@ -100,7 +100,7 @@ mod day5 {
                     // println!("set:{:?}", (idx, pcode,first, second, third, v[third]));
                     idx + 4
                 }
-                _ => idx,
+                _ => panic!("oops!"),
             }
         }
         // println!("out:{:?}", out);
