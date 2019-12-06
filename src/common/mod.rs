@@ -1,36 +1,26 @@
-use std::fs::File;
-use std::io::prelude::*;
-use std::io::BufRead;
-use std::io::BufReader;
+// use std::fs::File;
+use std::fs;
 
 pub fn parse_from_file(path: &str) -> Result<Vec<String>, &'static str> {
-    let f = match File::open(path) {
-        Ok(f) => f,
-        _ => return Err("file not exist"),
-    };
-    let file = BufReader::new(&f);
-    let mut lines = vec![];
-    for line in file.lines() {
-        let l = line.unwrap();
-        lines.push(l);
-        // println!("{}", l);
-    }
-    // println!("{:?}", lines);
-    return Ok(lines);
+    let read_str = fs::read_to_string(path).expect("file not found");
+    let contents = read_str.trim()
+        .lines()
+        .map(|x| x.trim())
+        .filter(|&x| x.len() != 0)
+        .map(|x| x.to_string())
+        .collect();
+    Ok(contents)
 }
 
 pub fn read_from_file(path: &str) -> Result<String, &'static str> {
-    let mut f = File::open(path).expect("file not found");
-    let mut contents = String::new();
-    f.read_to_string(&mut contents)
-        .expect("something went wrong reading the file");
+    let mut contents = fs::read_to_string(path).expect("file not found");
     contents = contents.trim().to_string();
     Ok(contents)
 }
 
 pub fn parse_from_str(val: &str) -> Vec<String> {
     let str_vec: Vec<String> = val
-        .split('\n')
+        .lines()
         .map(|x| x.trim())
         .filter(|&x| x.len() != 0)
         .map(|x| x.to_string())

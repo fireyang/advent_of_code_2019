@@ -32,7 +32,7 @@ mod day1 {
         let mut v = 0;
         val = val / 3 - 2;
         while val > 0 {
-            println!("v:{:?}", val);
+            // println!("v:{:?}", val);
             v += val;
             val = val / 3 - 2;
         }
