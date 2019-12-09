@@ -36,7 +36,35 @@ mod day8 {
     }
 
     #[allow(dead_code)]
-    pub fn part2(vec: &Vec<String>) -> i32 {
+    pub fn part2(w: i32, h: i32, vec: &Vec<i32>) -> i32 {
+        let mut layers = vec![];
+        let mut idx = 0;
+        for i in 0..vec.len() {
+            let cur = i as usize % (w * h) as usize;
+            if cur == 0 {
+                layers.push(vec![]);
+            }
+            let mut last = layers.last_mut().unwrap();
+            last.push(vec[i]);
+        }
+        let layer_num = layers.len();
+        let mut result = vec![];
+            // println!("pix{:?}", layers);
+        for i in 0..w*h {
+            result.push(2);
+            // for j in layer_num-1..=0 {
+            for j in 0..layer_num {
+                let pixel = layers[j as usize][i as usize] as i32;
+                if  pixel != 2{
+            // println!("pix{:?}", pixel);
+                    result[i as usize] = pixel;
+                    break;
+                }
+            }
+        }
+        for it in result.chunks(w as usize){
+            println!("{:?}", it);
+        }
         0
     }
 }
@@ -46,10 +74,10 @@ mod tests {
     use super::*;
     use crate::common;
 
-    #[test]
+    // #[test]
     fn day8_part1() {
         let input = common::read_from_file("./data/day8_part1.txt").unwrap();
-        println!("out:{:?}", input.len());
+        // println!("out:{:?}", input.len());
 
         // let list = common::parse_from_str(&input);
         // let ret2 = day8::part1(&list);
@@ -63,6 +91,20 @@ mod tests {
         assert_eq!(ret, 1677);
     }
 
-    // #[test]
-    fn day8_part2() {}
+    #[test]
+    fn day8_part2() {
+        let input = common::read_from_file("./data/day8_part1.txt").unwrap();
+        // println!("out:{:?}", input.len());
+
+        // let list = common::parse_from_str(&input);
+        // let ret2 = day8::part1(&list);
+        // assert_eq!(ret2, 417916);
+        let v = input
+            .chars()
+            // .map(|value| value.to_string().parse::<i32>().unwrap())
+            .map(|c| c.to_digit(10).unwrap() as i32)
+            .collect();
+        let ret = day8::part2(25, 6, &v);
+        assert_eq!(ret, 1677);
+    }
 }
