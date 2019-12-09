@@ -42,17 +42,17 @@ mod day6 {
         }
         // println!("{:?}", m);
 
-        let you ="YOU".to_string();
-        let san ="SAN".to_string();
+        let you = "YOU".to_string();
+        let san = "SAN".to_string();
         let you_list = get_list(you, &m);
         let san_list = get_list(san, &m);
         // println!("{:?}", you_list);
         // println!("{:?}", san_list);
         let mut found = 0;
-        for idx in 0..you_list.len(){
-            if you_list[idx] != san_list[idx]{
+        for idx in 0..you_list.len() {
+            if you_list[idx] != san_list[idx] {
                 found = idx;
-                break
+                break;
             }
         }
         // println!("{:?}", found);
@@ -76,7 +76,7 @@ mod day6 {
             key = v.to_string();
             list.push(key.clone());
         }
-         list.reverse();
+        list.reverse();
         list
     }
 }
@@ -106,7 +106,7 @@ mod tests {
         let list = common::parse_from_str(i_str);
         let ret2 = day6::part1(&list);
         assert_eq!(ret2, 42);
-        let list:Vec<String> = common::parse_from_file("./data/day6_part1.txt").unwrap();
+        let list: Vec<String> = common::parse_from_file("./data/day6_part1.txt").unwrap();
         // let list = common::parse_from_str(&input);
         let ret2 = day6::part1(&list);
         assert_eq!(ret2, 417916);

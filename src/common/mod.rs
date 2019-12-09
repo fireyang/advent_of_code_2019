@@ -3,7 +3,7 @@ use std::fs;
 
 pub fn parse_from_file(path: &str) -> Result<Vec<String>, &'static str> {
     let read_str = fs::read_to_string(path).expect("file not found");
-    let contents:Vec<String> = read_str
+    let contents: Vec<String> = read_str
         .trim()
         .lines()
         .map(|x| x.trim())
